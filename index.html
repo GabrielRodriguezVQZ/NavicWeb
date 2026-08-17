@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NAVIC — Ropa para hombre. Camisetas, camisas, pantalonetas y más. Barranquilla, Colombia." />
+  <title>NAVIC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#inicio" class="nav-logo">
+    <img src="img/logob.png" alt="NAVIC" class="nav-logo-img">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#catalogo">Catálogo</a></li>
+    <li><a href="#politicas">Políticas</a></li>
+    <li><a href="#contacto" class="nav-cta">Pedir ahora</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="cart-btn-open cart-icon-btn" aria-label="Ver carrito">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round"/><path stroke-linecap="round" stroke-linejoin="round" d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span class="cart-badge" style="display:none;">0</span>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Overlay oscuro detrás del drawer -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+
+<!-- Drawer lateral -->
+<aside class="drawer" id="drawer" aria-label="Menú móvil">
+  <div class="drawer-header">
+    <img src="img/logob.png" alt="NAVIC" class="drawer-logo">
+    <button class="drawer-close" id="drawerClose" aria-label="Cerrar menú">✕</button>
+  </div>
+  <nav class="drawer-nav">
+    <a href="#catalogo">Catálogo</a>
+    <a href="#politicas">Políticas de compra</a>
+    <a href="#contacto">Contacto</a>
+    <a href="https://wa.me/573147789579?text=Hola%20NAVIC!%20Quiero%20hacer%20un%20pedido%20🦐" target="_blank" rel="noopener">📱 WhatsApp</a>
+    <a href="https://instagram.com/navic.col" target="_blank" rel="noopener">📸 @navic.col</a>
+  </nav>
+</aside>
+
+<!-- Overlay carrito -->
+<div class="cart-overlay" id="cartOverlay"></div>
+
+<!-- Panel carrito -->
+<aside class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <span class="cart-title">Tu pedido <span class="cart-count">0</span></span>
+    <button class="cart-close" id="cartClose" aria-label="Cerrar carrito">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-empty" id="cartEmpty">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2" opacity=".3"><path stroke-linecap="round" stroke-linejoin="round" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round"/><path stroke-linecap="round" stroke-linejoin="round" d="M16 10a4 4 0 0 1-8 0"/></svg>
+    <p>Tu carrito está vacío</p>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <a id="cartWhatsapp" class="btn-wapp-big" href="#">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.558 4.136 1.535 5.874L0 24l6.295-1.49A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.791 9.791 0 0 1-5.031-1.384l-.361-.214-3.741.885.923-3.641-.235-.374A9.798 9.798 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818s9.818 4.4 9.818 9.818-4.4 9.818-9.818 9.818z"/></svg>
+      Enviar pedido por WhatsApp
+    </a>
+  </div>
+</aside>
+
+<!-- Overlay modal -->
+<div class="modal-overlay" id="modalOverlay"></div>
+
+<!-- Modal selección talla y color -->
+<div class="product-modal" id="productModal">
+  <div class="modal-header">
+    <h3 class="modal-name" id="modalName"></h3>
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>
+  </div>
+  <p class="modal-price" id="modalPrice"></p>
+  <div class="modal-section">
+    <p class="modal-label">Talla</p>
+    <div class="size-options" id="modalSizes"></div>
+  </div>
+  <div class="modal-section">
+    <p class="modal-label">Color</p>
+    <div class="color-options" id="modalColors"></div>
+  </div>
+  <button class="modal-add-btn" id="modalAddBtn" disabled>
+    Agregar al carrito
+  </button>
+</div>
+
+<!-- Feedback toast -->
+<div class="cart-feedback" id="cartFeedback">✓ Producto agregado al carrito</div>
+
+
+<!-- ── HERO ── -->
+<section class="hero" id="inicio">
+  <div class="hero-text">
+    <p class="hero-label">Colección actual · Barranquilla</p>
+    <h1 class="hero-title">
+      Hecho para<br/>Avanzar, diseñados<br/>para destacar.
+    </h1>
+    <p class="hero-sub">
+      Ropa para hombre pensada para el calor de la costa. Prendas cómodas, limpias y con carácter — desde básicos hasta camisas con personalidad.
+    </p>
+    <a href="#catalogo" class="btn-primary">
+      Ver catálogo
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+        <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+      </svg>
+    </a>
+  </div>
+  <div class="hero-image">
+    <img src="img/cuello/hero.png" alt="NAVIC ropa para hombre" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+</section>
+
+
+<!-- ── STRIP ── -->
+<div class="strip" aria-hidden="true">
+  <div class="strip-track">
+    <span class="strip-item">Envíos a toda Colombia</span><span class="strip-dot">·</span>
+    <span class="strip-item">Tallas S — XL</span><span class="strip-dot">·</span>
+    <span class="strip-item">Cambios en 7 días</span><span class="strip-dot">·</span>
+    <span class="strip-item">Pago con Bre-b y efectivo</span><span class="strip-dot">·</span>
+    <span class="strip-item">Pedidos por WhatsApp</span><span class="strip-dot">·</span>
+    <span class="strip-item">@navic.col en Instagram</span><span class="strip-dot">·</span>
+    <span class="strip-item">Envíos a toda Colombia</span><span class="strip-dot">·</span>
+    <span class="strip-item">Tallas S — XL</span><span class="strip-dot">·</span>
+    <span class="strip-item">Cambios en 7 días</span><span class="strip-dot">·</span>
+    <span class="strip-item">Pago con Bre-b y efectivo</span><span class="strip-dot">·</span>
+    <span class="strip-item">Pedidos por WhatsApp</span><span class="strip-dot">·</span>
+    <span class="strip-item">@navic.col en Instagram</span><span class="strip-dot">·</span>
+  </div>
+</div>
+
+<!-- ── SOBRE NOSOTROS ── -->
+<section class="section about-section" id="nosotros">
+  <div class="about-grid">
+
+    <div class="about-text fade-up">
+      <p class="section-label">Nuestra historia</p>
+      <h2 class="section-title about-title">Navegar significa<br/>avanzar.</h2>
+      <p class="about-body">
+        Navic nace en casa, inspirada en nuestro padre que ha navegado gran parte de su vida — su conexión con el mar nos enseñó que navegar significa avanzar, adaptarse y evolucionar.
+      </p>
+      <p class="about-body">
+        Bajo esa esencia creamos prendas masculinas versátiles, cómodas y auténticas para hombres que buscan estilo con naturalidad. Cada colección refleja un equilibrio entre diseño moderno, funcionalidad y atemporalidad, pensado para acompañar cada etapa de la vida.
+      </p>
+      <p class="about-quote">
+        Más que una marca de ropa, en Navic construimos una identidad para hombres que avanzan con confianza, personalidad y atención a los detalles.
+      </p>
+    </div>
+
+    <div class="about-image fade-up">
+      <!--
+        Pon aquí una foto tuya, de tu familia, del mar, o de producto.
+        <img src="img/nosotros.jpg" alt="Navic — nuestra historia">
+      -->
+      <div class="about-img-placeholder">
+        <span>🌊</span>
+        <p>Tu foto aquí</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── CATÁLOGO ── -->
+<section class="section" id="catalogo">
+  <p class="section-label">Lo que tenemos</p>
+  <h2 class="section-title">Catálogo</h2>
+
+  <div class="products-grid">
+
+    <!-- Camiseta Oversized -->
+    <article class="product-card fade-up"
+      data-name="Camiseta Oversized"
+      data-price="$45.000"
+      data-sizes="S,M,L,XL"
+      data-colors='[{"name":"Azul oscuro","hex":"#1a2a5e"},{"name":"Negro","hex":"#1a1a1a"},{"name":"Marfil","hex":"#f5f0e8"}]'>
+      <div class="product-image">
+        <img src="img/camisas/Camisas3.jpg.jpeg" alt="Camiseta Oversized NAVIC" loading="lazy">
+        <div class="product-overlay" aria-hidden="true">
+          <button class="add-to-cart-btn">+ Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Camiseta Oversized</div>
+          <div class="product-colors">
+            <span class="color-dot" style="background:#1a2a5e;" title="Azul oscuro"></span>
+            <span class="color-dot" style="background:#1a1a1a;" title="Negro"></span>
+            <span class="color-dot" style="background:#f5f0e8;border-color:#ccc;" title="Marfil"></span>
+          </div>
+        </div>
+        <div class="product-price">$45.000</div>
+      </div>
+      <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
+    </article>
+
+    <!-- Pantaloneta Algodón -->
+    <article class="product-card fade-up"
+      data-name="Pantaloneta Algodón"
+      data-price="$45.000"
+      data-sizes="S,M,L,XL"
+      data-colors='[{"name":"Negro","hex":"#1a1a1a"},{"name":"Marfil","hex":"#f5f0e8"}]'>
+      <div class="product-image">
+        <img src="img/pantalonetas/pantalonetas3.jpeg" alt="Pantaloneta Algodón NAVIC" loading="lazy">
+        <div class="product-overlay" aria-hidden="true">
+          <button class="add-to-cart-btn">+ Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Pantaloneta Algodón</div>
+          <div class="product-colors">
+            <span class="color-dot" style="background:#1a1a1a;" title="Negro"></span>
+            <span class="color-dot" style="background:#f5f0e8;border-color:#ccc;" title="Marfil"></span>
+          </div>
+        </div>
+        <div class="product-price">$45.000</div>
+      </div>
+      <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
+    </article>
+
+    <!-- Set Dos Piezas Negro -->
+    <article class="product-card fade-up"
+      data-name="Set Dos Piezas Negro"
+      data-price="$80.000"
+      data-sizes="S,M,L,XL"
+      data-colors='[{"name":"Negro","hex":"#1a1a1a"}]'>
+      <div class="product-image">
+        <img src="img/sets/Set negro.png" alt="Set Dos Piezas Negro NAVIC" loading="lazy">
+        <div class="product-overlay" aria-hidden="true">
+          <button class="add-to-cart-btn">+ Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Set Dos Piezas — Negro</div>
+          <div class="product-colors">
+            <span class="color-dot" style="background:#1a1a1a;" title="Negro"></span>
+          </div>
+        </div>
+        <div class="product-price">$80.000</div>
+      </div>
+      <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
+    </article>
+
+    <!-- Set Dos Piezas Marfil -->
+    <article class="product-card fade-up"
+      data-name="Set Dos Piezas Marfil"
+      data-price="$80.000"
+      data-sizes="S,M,L,XL"
+      data-colors='[{"name":"Marfil","hex":"#f5f0e8"}]'>
+      <div class="product-image">
+        <img src="img/sets/Set blanco 1.jpeg" alt="Set Dos Piezas Marfil NAVIC" loading="lazy">
+        <div class="product-overlay" aria-hidden="true">
+          <button class="add-to-cart-btn">+ Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Set Dos Piezas — Marfil</div>
+          <div class="product-colors">
+            <span class="color-dot" style="background:#f5f0e8;border-color:#ccc;" title="Marfil"></span>
+          </div>
+        </div>
+        <div class="product-price">$80.000</div>
+      </div>
+      <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
+    </article>
+
+    <!-- Camisa Polo -->
+    <article class="product-card fade-up"
+      data-name="Camisa Polo"
+      data-price="$50.000"
+      data-sizes="S,M,L,XL"
+      data-colors='[{"name":"Beige","hex":"#e8c89a"},{"name":"Azul oscuro","hex":"#1a2a5e"},{"name":"Negro","hex":"#1a1a1a"},{"name":"Marfil","hex":"#f5f0e8"},{"name":"Vinotinto","hex":"#7a1c3a"}]'>
+      <div class="product-image">
+        <img src="img/polo/polos3.jpeg" alt="Camisa Polo NAVIC" loading="lazy">
+        <div class="product-overlay" aria-hidden="true">
+          <button class="add-to-cart-btn">+ Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Camisa Polo</div>
+          <div class="product-colors">
+            <span class="color-dot" style="background:#e8c89a;" title="Beige"></span>
+            <span class="color-dot" style="background:#1a2a5e;" title="Azul oscuro"></span>
+            <span class="color-dot" style="background:#1a1a1a;" title="Negro"></span>
+            <span class="color-dot" style="background:#f5f0e8;border-color:#ccc;" title="Marfil"></span>
+            <span class="color-dot" style="background:#7a1c3a;" title="Vinotinto"></span>
+          </div>
+        </div>
+        <div class="product-price">$50.000</div>
+      </div>
+      <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
+    </article>
+
+    <!-- Camisa Botones -->
+    <article class="product-card fade-up"
+      data-name="Camisa Botones"
+      data-price="$70.000"
+      data-sizes="S,M,L,XL"
+      data-colors='[{"name":"Café","hex":"#6b3a2a"},{"name":"Negro","hex":"#1a1a1a"},{"name":"Rayas","hex":"#b8860b"}]'>
+      <div class="product-image">
+        <img src="img/cuello/camisascuello4.png" alt="Camisa Botones NAVIC" loading="lazy">
+        <div class="product-overlay" aria-hidden="true">
+          <button class="add-to-cart-btn">+ Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Camisa Botones</div>
+          <div class="product-colors">
+            <span class="color-dot" style="background:#6b3a2a;" title="Café"></span>
+            <span class="color-dot" style="background:#1a1a1a;" title="Negro"></span>
+            <span class="color-dot" style="background:repeating-linear-gradient(90deg,#b8860b 0,#b8860b 3px,#1a2a5e 3px,#1a2a5e 8px);" title="Rayas"></span>
+          </div>
+        </div>
+        <div class="product-price">$70.000</div>
+      </div>
+      <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
+    </article>
+
+    <!-- Bermuda en Dril -->
+    <article class="product-card fade-up"
+      data-name="Bermuda en Dril"
+      data-price="$70.000"
+      data-sizes="30,32"
+      data-colors='[{"name":"Azul","hex":"#1a2a5e"},{"name":"Negro","hex":"#1a1a1a"},{"name":"Verde","hex":"#2d4a2d"}]'>
+      <div class="product-image">
+        <img src="img/drill/bermudadrill.png" alt="Bermuda en Dril NAVIC" loading="lazy">
+        <div class="product-overlay" aria-hidden="true">
+          <button class="add-to-cart-btn">+ Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Bermuda en Dril</div>
+          <div class="product-colors">
+            <span class="color-dot" style="background:#1a2a5e;" title="Azul"></span>
+            <span class="color-dot" style="background:#1a1a1a;" title="Negro"></span>
+            <span class="color-dot" style="background:#2d4a2d;" title="Verde"></span>
+          </div>
+        </div>
+        <div class="product-price">$70.000</div>
+      </div>
+      <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- ── POLÍTICAS ── -->
+<section class="section" id="politicas">
+  <p class="section-label">Cómo funciona</p>
+  <h2 class="section-title">Compra con<br/>confianza</h2>
+  <div class="policies-grid">
+    <div class="policy-card fade-up">
+      <div class="policy-icon">📦</div>
+      <div class="policy-title">Envíos a Colombia</div>
+      <p class="policy-text">El costo de envío se calcula al momento del pedido. El tiempo de entrega depende de cuando se confirme tu pago.</p>
+    </div>
+    <div class="policy-card fade-up">
+      <div class="policy-icon">🔄</div>
+      <div class="policy-title">Cambios en 7 días</div>
+      <p class="policy-text">Tienes 7 días calendario para solicitar un cambio. La prenda debe estar sin uso, con etiqueta y en perfecto estado.</p>
+    </div>
+    <div class="policy-card fade-up">
+      <div class="policy-icon">💳</div>
+      <div class="policy-title">Métodos de pago</div>
+      <p class="policy-text">Aceptamos transferencias por Bre-b y efectivo contra entrega. El pedido se confirma al aprobar el pago.</p>
+    </div>
+    <div class="policy-card fade-up">
+      <div class="policy-icon">🔒</div>
+      <div class="policy-title">Datos seguros</div>
+      <p class="policy-text">Tu información personal se usa solo para gestionar tu pedido y no se comparte con terceros.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── CONTACTO ── -->
+<section class="section" id="contacto">
+  <div class="contact-grid">
+    <div class="contact-text">
+      <p class="section-label">Habla con nosotros</p>
+      <h2 class="section-title">¿Listo para<br/>pedir?</h2>
+      <p>Escríbenos directamente por WhatsApp o síguenos en Instagram para ver las últimas novedades y outfits de NAVIC.</p>
+      <div class="contact-buttons">
+        <a href="https://wa.me/573147789579?text=Hola%20NAVIC!%20%F0%9F%A6%90%20Quiero%20hacer%20un%20pedido" target="_blank" rel="noopener" class="btn-wapp-big">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.558 4.136 1.535 5.874L0 24l6.295-1.49A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.791 9.791 0 0 1-5.031-1.384l-.361-.214-3.741.885.923-3.641-.235-.374A9.798 9.798 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818s9.818 4.4 9.818 9.818-4.4 9.818-9.818 9.818z"/></svg>
+          WhatsApp · 314 7789579
+        </a>
+        <a href="https://instagram.com/navic.col" target="_blank" rel="noopener" class="btn-ig">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Instagram · @navic.col
+        </a>
+      </div>
+    </div>
+    <div class="contact-info-block fade-up">
+      <div class="info-row">
+        <span class="info-icon">📱</span>
+        <div><div class="info-label">WhatsApp</div><div class="info-value">314 7789579</div></div>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">📸</span>
+        <div><div class="info-label">Instagram</div><div class="info-value">@navic.col</div></div>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">💳</span>
+        <div><div class="info-label">Pago</div><div class="info-value">Bre-b · Efectivo contra entrega</div></div>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">📍</span>
+        <div><div class="info-label">Ubicación</div><div class="info-value">Barranquilla, Colombia</div></div>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">🔄</span>
+        <div><div class="info-label">Cambios</div><div class="info-value">7 días calendario</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <img src="img/logow.png" alt="NAVIC" class="footer-logo-img">
+  <span>© 2025 NAVIC · Ropa para hombre · Barranquilla</span>
+  <span>@navic.col</span>
+</footer>
+
+
+<!-- ── FLOATING WHATSAPP ── -->
+<a href="https://wa.me/573147789579?text=Hola%20NAVIC!%20%F0%9F%A6%90%20Quiero%20hacer%20un%20pedido"
+   class="float-wapp" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.558 4.136 1.535 5.874L0 24l6.295-1.49A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.791 9.791 0 0 1-5.031-1.384l-.361-.214-3.741.885.923-3.641-.235-.374A9.798 9.798 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818s9.818 4.4 9.818 9.818-4.4 9.818-9.818 9.818z"/>
+  </svg>
+</a>
+
+<script src="js/main.js"></script>
+</body>
+</html>>

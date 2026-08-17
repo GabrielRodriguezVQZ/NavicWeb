@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Página no encontrada — NAVIC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      gap: 1.5rem;
+    }
+    .err-code {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(5rem, 18vw, 10rem);
+      font-weight: 700;
+      color: var(--sand-dark);
+      line-height: 1;
+      user-select: none;
+    }
+    .err-icon { font-size: 3rem; }
+    .err-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 700;
+      color: var(--brown-dark);
+    }
+    .err-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 340px;
+      line-height: 1.7;
+    }
+    .err-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--brown-dark);
+      color: var(--off-white);
+      padding: 0.75rem 1.6rem;
+      border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-home:hover { background: var(--terracotta); }
+    .btn-wapp-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #25D366;
+      color: #fff;
+      padding: 0.75rem 1.6rem;
+      border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: filter 0.2s;
+    }
+    .btn-wapp-sm:hover { filter: brightness(1.08); }
+  </style>
+</head>
+<body>
+  <div class="err-code">404</div>
+  <div class="err-icon">🦐</div>
+  <h1 class="err-title">Página no encontrada</h1>
+  <p class="err-sub">
+    Parece que esta prenda ya no está disponible, o la URL está mal escrita. Vuelve al catálogo y encuentra lo que buscas.
+  </p>
+  <div class="err-actions">
+    <a href="index.html" class="btn-home">← Ir al catálogo</a>
+    <a href="https://wa.me/573147789579?text=Hola%20NAVIC!%20Necesito%20ayuda%20🦐" target="_blank" rel="noopener" class="btn-wapp-sm">WhatsApp</a>
+  </div>
+</body>
+</html>
