@@ -756,9 +756,6 @@ footer {
   .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
   .footer-logo-img { height: 80px; }
   footer { flex-direction: column; gap: 0.4rem; text-align: center; padding: 1.2rem 1.5rem; }
-  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .about-image { aspect-ratio: 16/9; }
-  .about-img-placeholder { min-height: 220px; }
 }
 
 @media (max-width: 480px) {
@@ -1230,6 +1227,71 @@ footer {
   opacity: 0.88;
 }
 
+/* ── ABOUT · RESPONSIVE ──
+   Este bloque va al final a propósito: las reglas .about-grid, .about-body,
+   etc. de arriba no tienen media query, así que si el bloque responsive
+   estuviera antes en el archivo, la regla de escritorio (por venir después
+   en el orden de cascada) le ganaría aunque el media query se cumpliera.
+   Puesto aquí, al final, siempre gana en pantallas angostas. */
 @media (max-width: 768px) {
-  .about-logo-img { max-width: 200px; }
-} 
+  .about-section { padding: 3.5rem 1.5rem; }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    text-align: center;
+  }
+
+  /* El logo pasa a ser una marca pequeña arriba del texto, no un bloque grande abajo */
+  .about-logo {
+    order: -1;
+    margin-bottom: 1.6rem;
+  }
+
+  .about-logo-img {
+    max-width: 110px;;
+  }
+
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section-label { text-align: center; }
+
+  .about-title {
+    font-size: clamp(1.5rem, 7vw, 1.9rem);
+    margin-bottom: 1.3rem;
+  }
+
+  .about-body {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    max-width: 36ch;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.1rem;
+    text-align: left;
+  }
+
+  /* La cita cambia de borde lateral a borde superior: se ve mejor centrada y angosta */
+  .about-quote {
+    font-size: 0.92rem;
+    text-align: left;
+    border-left: none;
+    border-top: 2px solid var(--terracotta);
+    padding-left: 0;
+    padding-top: 1rem;
+    margin-top: 1.6rem;
+    max-width: 36ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-body { font-size: 0.92rem; max-width: 32ch; }
+  .about-quote { font-size: 0.88rem; max-width: 32ch; }
+  .about-logo-img { max-width: 300px; }
+}
