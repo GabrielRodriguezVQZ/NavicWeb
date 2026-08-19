@@ -156,10 +156,10 @@ let selectedSize  = null;
 let selectedColor = null;
 let currentProduct = null;
 
-function openModal(product) {
+function openModal(product, isJeans) {
   currentProduct = product;
   selectedSize   = null;
-  selectedColor  = null;
+  selectedColor  = isJeans ? 'Único' : null;
 
   modalName.textContent  = product.name;
   modalPrice.textContent = product.price;
@@ -179,22 +179,32 @@ function openModal(product) {
     modalSizes.appendChild(btn);
   });
 
-  // Colores
-  modalColors.innerHTML = '';
-  product.colors.forEach(color => {
-    const btn = document.createElement('button');
-    btn.className   = 'color-btn';
-    btn.title       = color.name;
-    btn.style.background = color.hex;
-    if (color.hex === '#f5f0e8' || color.hex === '#FAF8F5') btn.style.border = '2px solid #ccc';
-    btn.addEventListener('click', () => {
-      modalColors.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedColor = color.name;
-      checkModalReady();
+  // Colores (se omite para jeans)
+  const colorSection = modalColors.closest('.modal-section');
+  const colorLabel = colorSection.querySelector('.modal-label');
+  if (isJeans) {
+    colorSection.style.display = '';
+    colorLabel.textContent = 'Único color';
+    modalColors.innerHTML = '';
+  } else {
+    colorSection.style.display = '';
+    colorLabel.textContent = 'Color';
+    modalColors.innerHTML = '';
+    product.colors.forEach(color => {
+      const btn = document.createElement('button');
+      btn.className   = 'color-btn';
+      btn.title       = color.name;
+      btn.style.background = color.hex;
+      if (color.hex === '#f5f0e8' || color.hex === '#FAF8F5') btn.style.border = '2px solid #ccc';
+      btn.addEventListener('click', () => {
+        modalColors.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedColor = color.name;
+        checkModalReady();
+      });
+      modalColors.appendChild(btn);
     });
-    modalColors.appendChild(btn);
-  });
+  }
 
   modalAddBtn.disabled = true;
   modal.classList.add('open');
@@ -250,13 +260,40 @@ document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
     const card = btn.closest('.product-card');
+    const isJeans = card.dataset.type === 'jeans';
     const product = {
       name:   card.dataset.name,
       price:  card.dataset.price,
       sizes:  card.dataset.sizes.split(','),
       colors: JSON.parse(card.dataset.colors)
     };
-    openModal(product);
+    openModal(product, isJeans);
+  });
+});
+
+// ── CATALOG FILTERS ──
+const filterBtns = document.querySelectorAll('.filter-btn');
+const productCards = document.querySelectorAll('.product-card');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+
+    productCards.forEach((card, i) => {
+      const match = filter === 'all' || card.dataset.category === filter;
+      card.classList.toggle('hidden', !match);
+      if (match) {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, i * 60);
+      }
+    });
   });
 });
 
@@ -272,11 +309,12 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.product-card.fade-up').forEach((el, i) => {
-  el.dataset.delay = i * 70;
+  el.dataset.delay = i * 80;
   observer.observe(el);
 });
 
-document.querySelectorAll('.fade-up:not(.product-card)').forEach(el => {
+document.querySelectorAll('.fade-up:not(.product-card)').forEach((el, i) => {
+  el.dataset.delay = i * 100;
   observer.observe(el);
 });
 
@@ -297,5 +335,60 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const offset = document.querySelector('nav').offsetHeight + 8;
     const top = target.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: 'smooth' });
+  });
+});
+
+// ── PRODUCT IMAGE HOVER CYCLING ──
+document.querySelectorAll('.product-card').forEach(card => {
+  const imagesData = card.dataset.images;
+  if (!imagesData) return;
+
+  const images = JSON.parse(imagesData);
+  if (images.length <= 1) return;
+
+  const imgEl = card.querySelector('.product-image img');
+  const dotsContainer = document.createElement('div');
+  dotsContainer.className = 'product-dots';
+
+  images.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.className = 'product-dot' + (i === 0 ? ' active' : '');
+    dotsContainer.appendChild(dot);
+  });
+
+  card.querySelector('.product-image').appendChild(dotsContainer);
+
+  let currentIdx = 0;
+  let interval = null;
+
+  function cycleImage() {
+    const dots = dotsContainer.querySelectorAll('.product-dot');
+    dots[currentIdx].classList.remove('active');
+    currentIdx = (currentIdx + 1) % images.length;
+    imgEl.style.opacity = '0';
+    setTimeout(() => {
+      imgEl.src = images[currentIdx];
+      imgEl.style.opacity = '1';
+      dots[currentIdx].classList.add('active');
+    }, 200);
+  }
+
+  card.addEventListener('mouseenter', () => {
+    imgEl.style.transition = 'opacity 0.2s ease';
+    interval = setInterval(cycleImage, 1500);
+  });
+
+  card.addEventListener('mouseleave', () => {
+    clearInterval(interval);
+    interval = null;
+    const dots = dotsContainer.querySelectorAll('.product-dot');
+    dots[currentIdx].classList.remove('active');
+    currentIdx = 0;
+    imgEl.style.opacity = '0';
+    setTimeout(() => {
+      imgEl.src = images[0];
+      imgEl.style.opacity = '1';
+      dots[0].classList.add('active');
+    }, 200);
   });
 });

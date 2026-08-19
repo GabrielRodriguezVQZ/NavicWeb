@@ -7,7 +7,7 @@
   <title>NAVIC</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -24,7 +24,7 @@
   </ul>
   <div class="nav-right">
     <button class="cart-btn-open cart-icon-btn" aria-label="Ver carrito">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round"/><path stroke-linecap="round" stroke-linejoin="round" d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v15"/><path d="M7 22a4 4 0 0 1-4-4 1 1 0 0 1 1-1h16a1 1 0 0 1 1 1 4 4 0 0 1-4 4z"/><path d="M9.159 2.46a1 1 0 0 1 1.521-.193l9.977 8.98A1 1 0 0 1 20 13H4a1 1 0 0 1-.824-1.567z"/></svg>
       <span class="cart-badge" style="display:none;">0</span>
     </button>
     <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
@@ -113,6 +113,12 @@
     <img src="img/jeans/parches1/parches1-1.png" alt="" aria-hidden="true" loading="lazy">
     <img src="img/jeans/parches2/parches2-1.png" alt="" aria-hidden="true" loading="lazy">
   </div>
+
+  <!-- Overlay con frase -->
+  <div class="carousel-overlay">
+    <p class="carousel-label">NAVIC · Colección actual</p>
+    <h1 class="carousel-phrase">Viste lo que<br/>te representa.</h1>
+  </div>
 </section>
 
 
@@ -152,15 +158,9 @@
       </p>
     </div>
 
-    <div class="about-image fade-up">
-      <!--
-        Pon aquí una foto tuya, de tu familia, del mar, o de producto.
-        <img src="img/nosotros.jpg" alt="Navic — nuestra historia">
-      -->
-      <div class="about-img-placeholder">
-        <span>🌊</span>
-        <p>Tu foto aquí</p>
-      </div>
+    <!-- Logo a la derecha -->
+    <div class="about-logo fade-up">
+      <img src="img/logob.png" alt="NAVIC" class="about-logo-img">
     </div>
 
   </div>
@@ -171,16 +171,25 @@
   <p class="section-label">Lo que tenemos</p>
   <h2 class="section-title">Catálogo</h2>
 
+  <div class="catalog-filters fade-up">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="camisas">Camisas</button>
+    <button class="filter-btn" data-filter="pantalones">Pantalones</button>
+    <button class="filter-btn" data-filter="sets">Sets</button>
+  </div>
+
   <div class="products-grid">
 
     <!-- Camiseta Oversized -->
-    <article class="product-card fade-up"
+    <article class="product-card fade-up" data-category="camisas"
       data-name="Camiseta Oversized"
       data-price="$45.000"
       data-sizes="S,M,L,XL"
-      data-colors='[{"name":"Azul oscuro","hex":"#1a2a5e"},{"name":"Negro","hex":"#1a1a1a"},{"name":"Marfil","hex":"#f5f0e8"}]'>
+      data-colors='[{"name":"Azul oscuro","hex":"#1a2a5e"},{"name":"Negro","hex":"#1a1a1a"},{"name":"Marfil","hex":"#f5f0e8"},{"name":"Verde","hex":"#2d6a4f"}]'
+      data-images='["img/camisas/Camisas3.jpg.jpeg","img/camisas/camisetaazulmodel.png","img/camisas/Camisas2.jpeg","img/camisas/Camisaverde.png","img/camisas/camisetaverdemodelo.png","img/camisas/Camisaverde2.png"]'>
       <div class="product-image">
         <img src="img/camisas/Camisas3.jpg.jpeg" alt="Camiseta Oversized NAVIC" loading="lazy">
+        <span class="product-badge badge-new">Nuevo</span>
         <div class="product-overlay" aria-hidden="true">
           <button class="add-to-cart-btn">+ Agregar al carrito</button>
         </div>
@@ -192,6 +201,7 @@
             <span class="color-dot" style="background:#1a2a5e;" title="Azul oscuro"></span>
             <span class="color-dot" style="background:#1a1a1a;" title="Negro"></span>
             <span class="color-dot" style="background:#f5f0e8;border-color:#ccc;" title="Marfil"></span>
+            <span class="color-dot" style="background:#2d6a4f;" title="Verde"></span>
           </div>
         </div>
         <div class="product-price">$45.000</div>
@@ -200,11 +210,12 @@
     </article>
 
     <!-- Pantaloneta Algodón -->
-    <article class="product-card fade-up"
+    <article class="product-card fade-up" data-category="pantalones"
       data-name="Pantaloneta Algodón"
       data-price="$45.000"
       data-sizes="S,M,L,XL"
-      data-colors='[{"name":"Negro","hex":"#1a1a1a"},{"name":"Marfil","hex":"#f5f0e8"}]'>
+      data-colors='[{"name":"Negro","hex":"#1a1a1a"},{"name":"Marfil","hex":"#f5f0e8"}]'
+      data-images='["img/pantalonetas/pantalonetas3.jpeg","img/pantalonetas/pantalonetas1.png","img/pantalonetas/pantalonetas2.jpeg","img/pantalonetas/Detalle 1.png","img/pantalonetas/Detalle 2.png"]'>
       <div class="product-image">
         <img src="img/pantalonetas/pantalonetas3.jpeg" alt="Pantaloneta Algodón NAVIC" loading="lazy">
         <div class="product-overlay" aria-hidden="true">
@@ -225,11 +236,12 @@
     </article>
 
     <!-- Set Dos Piezas Negro -->
-    <article class="product-card fade-up"
+    <article class="product-card fade-up" data-category="sets"
       data-name="Set Dos Piezas Negro"
       data-price="$80.000"
       data-sizes="S,M,L,XL"
-      data-colors='[{"name":"Negro","hex":"#1a1a1a"}]'>
+      data-colors='[{"name":"Negro","hex":"#1a1a1a"}]'
+      data-images='["img/sets/Set negro.png"]'>
       <div class="product-image">
         <img src="img/sets/Set negro.png" alt="Set Dos Piezas Negro NAVIC" loading="lazy">
         <div class="product-overlay" aria-hidden="true">
@@ -249,11 +261,12 @@
     </article>
 
     <!-- Set Dos Piezas Marfil -->
-    <article class="product-card fade-up"
+    <article class="product-card fade-up" data-category="sets"
       data-name="Set Dos Piezas Marfil"
       data-price="$80.000"
       data-sizes="S,M,L,XL"
-      data-colors='[{"name":"Marfil","hex":"#f5f0e8"}]'>
+      data-colors='[{"name":"Marfil","hex":"#f5f0e8"}]'
+      data-images='["img/sets/Set blanco 1.jpeg","img/sets/Set blanco 2.png"]'>
       <div class="product-image">
         <img src="img/sets/Set blanco 1.jpeg" alt="Set Dos Piezas Marfil NAVIC" loading="lazy">
         <div class="product-overlay" aria-hidden="true">
@@ -273,13 +286,14 @@
     </article>
 
     <!-- Camisa Polo -->
-    <article class="product-card fade-up"
+    <article class="product-card fade-up" data-category="camisas"
       data-name="Camisa Polo"
       data-price="$50.000"
       data-sizes="S,M,L,XL"
-      data-colors='[{"name":"Beige","hex":"#e8c89a"},{"name":"Azul oscuro","hex":"#1a2a5e"},{"name":"Negro","hex":"#1a1a1a"},{"name":"Marfil","hex":"#f5f0e8"},{"name":"Vinotinto","hex":"#7a1c3a"}]'>
+      data-colors='[{"name":"Beige","hex":"#e8c89a"},{"name":"Azul oscuro","hex":"#1a2a5e"},{"name":"Negro","hex":"#1a1a1a"},{"name":"Marfil","hex":"#f5f0e8"},{"name":"Vinotinto","hex":"#7a1c3a"},{"name":"Rosa","hex":"#f6a0bb"}]'
+      data-images='["img/polo/polos4.png","img/polo/polos1.jpeg","img/polo/polos2.jpeg"]'>
       <div class="product-image">
-        <img src="img/polo/polos3.jpeg" alt="Camisa Polo NAVIC" loading="lazy">
+        <img src="img/polo/polos4.png" alt="Camisa Polo NAVIC" loading="lazy">
         <div class="product-overlay" aria-hidden="true">
           <button class="add-to-cart-btn">+ Agregar al carrito</button>
         </div>
@@ -293,6 +307,8 @@
             <span class="color-dot" style="background:#1a1a1a;" title="Negro"></span>
             <span class="color-dot" style="background:#f5f0e8;border-color:#ccc;" title="Marfil"></span>
             <span class="color-dot" style="background:#7a1c3a;" title="Vinotinto"></span>
+            <span class="color-dot" style="background:#f6a0bb;" title="Rosa"></span>
+
           </div>
         </div>
         <div class="product-price">$50.000</div>
@@ -301,37 +317,48 @@
     </article>
 
     <!-- Camisa Botones -->
-    <article class="product-card fade-up"
-      data-name="Camisa Botones"
-      data-price="$70.000"
-      data-sizes="S,M,L,XL"
-      data-colors='[{"name":"Café","hex":"#6b3a2a"},{"name":"Negro","hex":"#1a1a1a"},{"name":"Rayas","hex":"#b8860b"}]'>
-      <div class="product-image">
-        <img src="img/cuello/camisascuello4.png" alt="Camisa Botones NAVIC" loading="lazy">
-        <div class="product-overlay" aria-hidden="true">
-          <button class="add-to-cart-btn">+ Agregar al carrito</button>
-        </div>
+<article class="product-card fade-up" data-category="camisas"
+  data-name="Camisa Botones"
+  data-price="$70.000"
+  data-sizes="S,M,L,XL"
+  data-colors='[{"name":"Café","hex":"#8B6347"},{"name":"Negro","hex":"#1a1a1a"},{"name":"Rayas finas","hex":"#d4cfc8"},{"name":"Rayas gruesas","hex":"#b0aba3"},{"name":"Hueso","hex":"#e8dcc8"},{"name":"Verde salvia","hex":"#7a9e7e"},{"name":"Azul rayas","hex":"#1a2a5e"}]'
+  data-images='["img/cuello/camisascuellocolecc.png","img/cuello/camisascuello2.png","img/cuello/camisascuello3.png","img/cuello/individual camisahueso.png","img/cuello/individual camisamarron2.png","img/cuello/individual camisaVerde.png","img/cuello/individual camisarayas.png","img/cuello/individual camisaazul.png","img/cuello/camisascuello4.png"]'>
+  <div class="product-image">
+    <img src="img/cuello/camisascuellocolecc.png" alt="Camisa Botones NAVIC" loading="lazy">
+    <div class="product-overlay" aria-hidden="true">
+      <button class="add-to-cart-btn">+ Agregar al carrito</button>
+    </div>
+  </div>
+  <div class="product-info">
+    <div>
+      <div class="product-name">Camisa Botones</div>
+      <div class="product-colors">
+        <!-- Colores originales -->
+        <span class="color-dot" style="background:#6b3a2a;" title="Café oscuro"></span>
+        <span class="color-dot" style="background:#1a1a1a;" title="Negro"></span>
+        <span class="color-dot" style="background:repeating-linear-gradient(90deg,#b8860b 0,#b8860b 3px,#1a2a5e 3px,#1a2a5e 8px);" title="Rayas original"></span>
+        <span class="color-dot" style="background:#e8dcc8;border-color:#ccc;" title="Hueso"></span>
+        <span class="color-dot" style="background:#2d6a4f;" title="Verde"></span>
+        <span class="color-dot" style="background:#1a2a5e;" title="Azul"></span>
+        <!-- Colores nuevos -->
+        <span class="color-dot" style="background:#8B6347;" title="Café topo"></span>
+        <span class="color-dot" style="background:repeating-linear-gradient(90deg,#9a9590 0,#9a9590 3px,#f0ece8 3px,#f0ece8 8px);" title="Rayas finas"></span>
+        <span class="color-dot" style="background:repeating-linear-gradient(90deg,#6b6760 0,#6b6760 5px,#f0ece8 5px,#f0ece8 9px);" title="Rayas gruesas"></span>
+        <span class="color-dot" style="background:#7a9e7e;" title="Verde salvia"></span>
       </div>
-      <div class="product-info">
-        <div>
-          <div class="product-name">Camisa Botones</div>
-          <div class="product-colors">
-            <span class="color-dot" style="background:#6b3a2a;" title="Café"></span>
-            <span class="color-dot" style="background:#1a1a1a;" title="Negro"></span>
-            <span class="color-dot" style="background:repeating-linear-gradient(90deg,#b8860b 0,#b8860b 3px,#1a2a5e 3px,#1a2a5e 8px);" title="Rayas"></span>
-          </div>
-        </div>
-        <div class="product-price">$70.000</div>
-      </div>
-      <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
-    </article>
+    </div>
+    <div class="product-price">$70.000</div>
+  </div>
+  <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
+</article>
 
     <!-- Bermuda en Dril -->
-    <article class="product-card fade-up"
+    <article class="product-card fade-up" data-category="pantalones"
       data-name="Bermuda en Dril"
       data-price="$70.000"
       data-sizes="30,32"
-      data-colors='[{"name":"Azul","hex":"#1a2a5e"},{"name":"Negro","hex":"#1a1a1a"},{"name":"Verde","hex":"#2d4a2d"}]'>
+      data-colors='[{"name":"Azul","hex":"#1a2a5e"}]'
+      data-images='["img/drill/bermudadrill.png"]'>
       <div class="product-image">
         <img src="img/drill/bermudadrill.png" alt="Bermuda en Dril NAVIC" loading="lazy">
         <div class="product-overlay" aria-hidden="true">
@@ -343,11 +370,105 @@
           <div class="product-name">Bermuda en Dril</div>
           <div class="product-colors">
             <span class="color-dot" style="background:#1a2a5e;" title="Azul"></span>
-            <span class="color-dot" style="background:#1a1a1a;" title="Negro"></span>
-            <span class="color-dot" style="background:#2d4a2d;" title="Verde"></span>
           </div>
         </div>
         <div class="product-price">$70.000</div>
+      </div>
+      <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
+    </article>
+
+    <!-- Jean Recto -->
+    <article class="product-card fade-up" data-category="pantalones" data-type="jeans"
+      data-name="N001"
+      data-price="$130.000"
+      data-sizes="30,32,34"
+      data-colors='[]'
+      data-images='["img/jeans/recto/recto.png","img/jeans/recto/recto2.png","img/jeans/recto/recto3.png","img/jeans/recto/recto4.png"]'>
+      <div class="product-image">
+        <img src="img/jeans/recto/recto.png" alt="N001 NAVIC" loading="lazy">
+        <span class="product-badge badge-new">Nuevo</span>
+        <div class="product-overlay" aria-hidden="true">
+          <button class="add-to-cart-btn">+ Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">N001</div>
+          <div class="product-subtitle">Jean Recto</div>
+        </div>
+        <div class="product-price">$130.000</div>
+      </div>
+      <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
+    </article>
+
+    <!-- Jean Baggy -->
+    <article class="product-card fade-up" data-category="pantalones" data-type="jeans"
+      data-name="N002"
+      data-price="$130.000"
+      data-sizes="30,32,34"
+      data-colors='[]'
+      data-images='["img/jeans/baggy/baggy.png","img/jeans/baggy/baggy2.png","img/jeans/baggy/baggy3.png","img/jeans/baggy/baggy4.png"]'>
+      <div class="product-image">
+        <img src="img/jeans/baggy/baggy.png" alt="N002 NAVIC" loading="lazy">
+        <span class="product-badge badge-new">Nuevo</span>
+        <div class="product-overlay" aria-hidden="true">
+          <button class="add-to-cart-btn">+ Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">N002</div>
+          <div class="product-subtitle">Jean Baggy</div>
+        </div>
+        <div class="product-price">$130.000</div>
+      </div>
+      <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
+    </article>
+
+    <!-- Jean Baggy con Parches -->
+    <article class="product-card fade-up" data-category="pantalones" data-type="jeans"
+      data-name="N004"
+      data-price="$150.000"
+      data-sizes="30,32,34"
+      data-colors='[]'
+      data-images='["img/jeans/parches1/parches1-1.png","img/jeans/parches1/parches1-2.png","img/jeans/parches1/parches1-3.png","img/jeans/parches1/parches1-4.png"]'>
+      <div class="product-image">
+        <img src="img/jeans/parches1/parches1-1.png" alt="N004 NAVIC" loading="lazy">
+        <span class="product-badge badge-new">Nuevo</span>
+        <div class="product-overlay" aria-hidden="true">
+          <button class="add-to-cart-btn">+ Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">N004</div>
+          <div class="product-subtitle">Jean Baggy con Parches</div>
+        </div>
+        <div class="product-price">$150.000</div>
+      </div>
+      <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
+    </article>
+
+    <!-- Jean Baggy con Parches 2 -->
+    <article class="product-card fade-up" data-category="pantalones" data-type="jeans"
+      data-name="N003"
+      data-price="$150.000"
+      data-sizes="30,32,34"
+      data-colors='[]'
+      data-images='["img/jeans/parches2/parches2-1.png","img/jeans/parches2/parches2-2.png","img/jeans/parches2/parches2-3.png","img/jeans/parches2/parches2-4.png"]'>
+      <div class="product-image">
+        <img src="img/jeans/parches2/parches2-1.png" alt="N003 NAVIC" loading="lazy">
+        <span class="product-badge badge-new">Nuevo</span>
+        <div class="product-overlay" aria-hidden="true">
+          <button class="add-to-cart-btn">+ Agregar al carrito</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">N003</div>
+          <div class="product-subtitle">Jean Baggy con Parches</div>
+        </div>
+        <div class="product-price">$150.000</div>
       </div>
       <button class="add-to-cart-btn mobile-add-btn">+ Agregar al carrito</button>
     </article>
