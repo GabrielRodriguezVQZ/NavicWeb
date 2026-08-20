@@ -348,7 +348,14 @@ document.querySelectorAll('.product-card').forEach(card => {
   const images = JSON.parse(imagesData);
   if (images.length <= 1) return;
 
+  // Precargar imágenes en segundo plano
+  images.forEach(src => {
+    const preload = new Image();
+    preload.src = src;
+  });
+
   const imgEl = card.querySelector('.product-image img');
+  imgEl.decoding = 'async';
   const dotsContainer = document.createElement('div');
   dotsContainer.className = 'product-dots';
 
