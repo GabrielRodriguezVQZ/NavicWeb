@@ -339,6 +339,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ── PRODUCT IMAGE HOVER CYCLING ──
+const isMobile = window.matchMedia('(hover: none)').matches;
+
 document.querySelectorAll('.product-card').forEach(card => {
   const imagesData = card.dataset.images;
   if (!imagesData) return;
@@ -373,12 +375,7 @@ document.querySelectorAll('.product-card').forEach(card => {
     }, 200);
   }
 
-  card.addEventListener('mouseenter', () => {
-    imgEl.style.transition = 'opacity 0.2s ease';
-    interval = setInterval(cycleImage, 1500);
-  });
-
-  card.addEventListener('mouseleave', () => {
+  function resetToFirst() {
     clearInterval(interval);
     interval = null;
     const dots = dotsContainer.querySelectorAll('.product-dot');
@@ -390,5 +387,27 @@ document.querySelectorAll('.product-card').forEach(card => {
       imgEl.style.opacity = '1';
       dots[0].classList.add('active');
     }, 200);
-  });
+  }
+
+  if (isMobile) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          imgEl.style.transition = 'opacity 0.2s ease';
+          interval = setInterval(cycleImage, 2000);
+        } else {
+          clearInterval(interval);
+          interval = null;
+        }
+      });
+    }, { threshold: 0.5 });
+    observer.observe(card);
+  } else {
+    card.addEventListener('mouseenter', () => {
+      imgEl.style.transition = 'opacity 0.2s ease';
+      interval = setInterval(cycleImage, 1500);
+    });
+
+    card.addEventListener('mouseleave', resetToFirst);
+  }
 });
