@@ -398,6 +398,7 @@ document.querySelectorAll('.product-card').forEach(card => {
         } else {
           clearInterval(interval);
           interval = null;
+          resetToFirst();
         }
       });
     }, { threshold: 0.5 });
