@@ -155,9 +155,11 @@ const modalAddBtn    = document.getElementById('modalAddBtn');
 let selectedSize  = null;
 let selectedColor = null;
 let currentProduct = null;
+let currentCardEl = null;
 
-function openModal(product, isJeans) {
+function openModal(product, isJeans, cardEl) {
   currentProduct = product;
+  currentCardEl = cardEl;
   selectedSize   = null;
   selectedColor  = isJeans ? 'Único' : null;
 
@@ -190,7 +192,7 @@ function openModal(product, isJeans) {
     colorSection.style.display = '';
     colorLabel.textContent = 'Color';
     modalColors.innerHTML = '';
-    product.colors.forEach(color => {
+    product.colors.forEach((color, i) => {
       const btn = document.createElement('button');
       btn.className   = 'color-btn';
       btn.title       = color.name;
@@ -200,6 +202,13 @@ function openModal(product, isJeans) {
         modalColors.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         selectedColor = color.name;
+        if (currentCardEl && currentCardEl.dataset.images) {
+          const images = JSON.parse(currentCardEl.dataset.images);
+          if (images[i]) {
+            const img = currentCardEl.querySelector('.product-image img');
+            if (img) img.src = images[i];
+          }
+        }
         checkModalReady();
       });
       modalColors.appendChild(btn);
@@ -267,7 +276,7 @@ document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
       sizes:  card.dataset.sizes.split(','),
       colors: JSON.parse(card.dataset.colors)
     };
-    openModal(product, isJeans);
+    openModal(product, isJeans, card);
   });
 });
 
