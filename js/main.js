@@ -347,84 +347,106 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// ── PRODUCT IMAGE HOVER CYCLING ──
-const isMobile = window.matchMedia('(hover: none)').matches;
-
+// ── PRODUCT CARD: ARROWS + QUICK ADD ──
 document.querySelectorAll('.product-card').forEach(card => {
   const imagesData = card.dataset.images;
-  if (!imagesData) return;
+  const imgContainer = card.querySelector('.product-image');
+  if (!imagesData || !imgContainer) return;
 
   const images = JSON.parse(imagesData);
-  if (images.length <= 1) return;
+  const imgEl = imgContainer.querySelector('img');
+  if (!imgEl) return;
 
-  // Precargar imágenes en segundo plano
-  images.forEach(src => {
-    const preload = new Image();
-    preload.src = src;
-  });
-
-  const imgEl = card.querySelector('.product-image img');
   imgEl.decoding = 'async';
-  const dotsContainer = document.createElement('div');
-  dotsContainer.className = 'product-dots';
 
-  images.forEach((_, i) => {
-    const dot = document.createElement('span');
-    dot.className = 'product-dot' + (i === 0 ? ' active' : '');
-    dotsContainer.appendChild(dot);
-  });
+  // Preload
+  images.forEach(src => { const p = new Image(); p.src = src; });
 
-  card.querySelector('.product-image').appendChild(dotsContainer);
+  if (images.length > 1) {
+    // Add arrows
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'card-arrow card-arrow-prev';
+    prevBtn.innerHTML = '&#8249;';
+    prevBtn.setAttribute('aria-label', 'Imagen anterior');
 
-  let currentIdx = 0;
-  let interval = null;
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'card-arrow card-arrow-next';
+    nextBtn.innerHTML = '&#8250;';
+    nextBtn.setAttribute('aria-label', 'Siguiente imagen');
 
-  function cycleImage() {
-    const dots = dotsContainer.querySelectorAll('.product-dot');
-    dots[currentIdx].classList.remove('active');
-    currentIdx = (currentIdx + 1) % images.length;
-    imgEl.style.opacity = '0';
-    setTimeout(() => {
-      imgEl.src = images[currentIdx];
-      imgEl.style.opacity = '1';
-      dots[currentIdx].classList.add('active');
-    }, 200);
-  }
+    imgContainer.appendChild(prevBtn);
+    imgContainer.appendChild(nextBtn);
 
-  function resetToFirst() {
-    clearInterval(interval);
-    interval = null;
-    const dots = dotsContainer.querySelectorAll('.product-dot');
-    dots[currentIdx].classList.remove('active');
-    currentIdx = 0;
-    imgEl.style.opacity = '0';
-    setTimeout(() => {
-      imgEl.src = images[0];
-      imgEl.style.opacity = '1';
-      dots[0].classList.add('active');
-    }, 200);
-  }
+    // Add dots
+    const dotsContainer = document.createElement('div');
+    dotsContainer.className = 'product-dots';
+    images.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'product-dot' + (i === 0 ? ' active' : '');
+      dotsContainer.appendChild(dot);
+    });
+    imgContainer.appendChild(dotsContainer);
 
-  if (isMobile) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          imgEl.style.transition = 'opacity 0.2s ease';
-          interval = setInterval(cycleImage, 2000);
-        } else {
-          clearInterval(interval);
-          interval = null;
-          resetToFirst();
-        }
-      });
-    }, { threshold: 0.5 });
-    observer.observe(card);
-  } else {
-    card.addEventListener('mouseenter', () => {
-      imgEl.style.transition = 'opacity 0.2s ease';
-      interval = setInterval(cycleImage, 1500);
+    let currentIdx = 0;
+
+    function goToImage(idx) {
+      const dots = dotsContainer.querySelectorAll('.product-dot');
+      dots[currentIdx].classList.remove('active');
+      currentIdx = idx;
+      imgEl.style.opacity = '0';
+      setTimeout(() => {
+        imgEl.src = images[currentIdx];
+        imgEl.style.opacity = '1';
+        dots[currentIdx].classList.add('active');
+      }, 150);
+    }
+
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      goToImage((currentIdx - 1 + images.length) % images.length);
     });
 
-    card.addEventListener('mouseleave', resetToFirst);
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      goToImage((currentIdx + 1) % images.length);
+    });
+
+    // Swipe gesture for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const swipeThreshold = 40;
+
+    imgContainer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    imgContainer.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          goToImage((currentIdx + 1) % images.length);
+        } else {
+          goToImage((currentIdx - 1 + images.length) % images.length);
+        }
+      }
+    }, { passive: true });
   }
+
+  // Add quick-add button
+  const quickAdd = document.createElement('button');
+  quickAdd.className = 'quick-add-btn';
+  quickAdd.textContent = '+ Agregar al carrito';
+  quickAdd.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isJeans = card.dataset.type === 'jeans';
+    const product = {
+      name:   card.dataset.name,
+      price:  card.dataset.price,
+      sizes:  card.dataset.sizes.split(','),
+      colors: JSON.parse(card.dataset.colors)
+    };
+    openModal(product, isJeans, card);
+  });
+  imgContainer.appendChild(quickAdd);
 });
