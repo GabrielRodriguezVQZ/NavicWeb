@@ -347,6 +347,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
+
+
 // ── PRODUCT CARD: ARROWS + QUICK ADD ──
 document.querySelectorAll('.product-card').forEach(card => {
   const imagesData = card.dataset.images;
@@ -450,3 +452,24 @@ document.querySelectorAll('.product-card').forEach(card => {
   });
   imgContainer.appendChild(quickAdd);
 });
+
+// ── FAQ ACCORDION ──
+document.querySelectorAll('.faq-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const answer  = btn.nextElementSibling;
+    const isOpen  = btn.getAttribute('aria-expanded') === 'true';
+
+    // Cierra todos los demás
+    document.querySelectorAll('.faq-btn').forEach(b => {
+      b.setAttribute('aria-expanded', 'false');
+      b.nextElementSibling.classList.remove('open');
+    });
+
+    // Abre o cierra el actual
+    if (!isOpen) {
+      btn.setAttribute('aria-expanded', 'true');
+      answer.classList.add('open');
+    }
+  });
+});
+
